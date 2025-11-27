@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>猫咪菜单 - 宠物食品菜单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF8A65',
+                        secondary: '#4FC3F7',
+                        neutral: '#F5F5F5',
+                        dark: '#333333'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            }
+            .transition-all-300 {
+                transition: all 0.3s ease;
+            }
+            .hover-scale {
+                transition: transform 0.3s ease;
+            }
+            .hover-scale:hover {
+                transform: scale(1.03);
+            }
+            .line-element {
+                @apply h-px bg-black my-6;
+            }
+            .section-container {
+                @apply relative my-16 px-8;
+            }
+            .category-active {
+                @apply text-primary border-primary;
+            }
+            /* 固定图片尺寸 */
+            .product-image {
+                width: 100%;
+                height: 280px;
+                object-fit: cover;
+            }
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-dark">
+    <nav class="fixed top-0 left-0 w-full bg-white bg-opacity-95 shadow-sm z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="index.html" class="flex items-center">
+                    <i class="fa fa-paw text-primary text-3xl mr-2"></i>
+                    <span class="text-2xl font-light">Chewchew O'clock</span>
+                </a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="font-light hover:text-primary transition-all-300">首页</a>
+                <a href="cat-menu.html" class="font-light text-primary transition-all-300">猫咪菜单</a>
+                <a href="dog-menu.html" class="font-light hover:text-primary transition-all-300">狗狗菜单</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-dark focus:outline-none">
+                    <i class="fa fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white w-full border-t">
+            <div class="container mx-auto px-4 py-2">
+                <a href="index.html" class="block py-2 font-light hover:text-primary">首页</a>
+                <a href="cat-menu.html" class="block py-2 font-light text-primary">猫咪菜单</a>
+                <a href="dog-menu.html" class="block py-2 font-light hover:text-primary">狗狗菜单</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-12 px-4 relative bg-cover bg-center" style="background-image: url('猫banner.png');">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="container mx-auto text-center relative z-10" data-aos="fade-up">
+            <h1 class="text-4xl md:text-5xl font-light mb-4 text-white text-shadow">猫咪菜单</h1>
+            <div class="line-element w-24 mx-auto"></div>
+            <p class="text-lg font-light mt-6 text-white text-shadow">
+                探索我们为猫咪提供的各种美味食品，满足您爱宠的味蕾需求
+            </p>
+        </div>
+    </section>
+
+    <section class="py-8 px-4 sticky top-16 bg-white z-40 shadow-sm">
+        <div class="container mx-auto">
+            <div class="flex overflow-x-auto pb-4 hide-scrollbar" id="category-nav">
+                <button class="category-btn category-active whitespace-nowrap px-6 py-2 mr-4 border-b-2 font-light text-lg transition-all-300" data-category="all">全部</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="new-arrival">近日新品</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-food-box">猫咪餐盒</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-can">猫咪罐头</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-paste">猫咪餐包</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-strip">猫咪猫条</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-milk">猫咪奶包</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-soup">猫咪汤汤</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-freeze-dried-main">猫咪主食冻干</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-freeze-dried-snack">猫咪零食冻干</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-supplement">猫咪保健品</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 mr-4 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-supplies">猫咪用品</button>
+                <button class="category-btn whitespace-nowrap px-6 py-2 border-b-2 border-transparent font-light text-lg transition-all-300" data-category="cat-toy">猫咪玩具</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 px-4">
+        <div class="container mx-auto">
+            
+            <div class="category-section" id="new-arrival-section">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-3xl font-light" data-aos="fade-up">近日新品</h2>
+                    <span class="text-sm text-gray-500" data-aos="fade-up" data-aos-delay="100">新品日期: 2025-11-21</span>
+                </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="new-arrival" data-aos="fade-up" data-aos-delay="100">
+                        <img src="1.png" alt="博咖猫粮" class="natural-image">
+                        <div class="p-4"></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="new-arrival" data-aos="fade-up" data-aos-delay="200">
+                        <img src="2.png" alt="猫饭" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="new-arrival" data-aos="fade-up" data-aos-delay="300">
+                        <img src="3.png" alt="猫咪食品" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="new-arrival" data-aos="fade-up" data-aos-delay="400">
+                        <img src="4.png" alt="猫饭" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="category-section mt-16" id="cat-food-box-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪餐盒</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-food-box" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p1-餐盒1.png" alt="猫咪餐盒" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-food-box" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p2-餐盒2.png" alt="猫咪餐盒" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-food-box" data-aos="fade-up" data-aos-delay="300">
+                        <img src="p3-餐盒3 .png" alt="猫咪餐盒" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-can-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪罐头</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-can" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p4-罐头1.png" alt="猫咪罐头" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-can" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p5-罐头2.png" alt="猫咪罐头" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-can" data-aos="fade-up" data-aos-delay="300">
+                        <img src="P6-罐头3.png" alt="猫咪罐头" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-can" data-aos="fade-up" data-aos-delay="400">
+                        <img src="p7-罐头4 进口.png" alt="猫咪罐头" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-paste-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪餐包</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-paste" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p8-餐包1 .png" alt="猫咪酱包" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-paste" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p9-餐包2.png" alt="猫咪酱包" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-strip-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪猫条</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-strip" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p10-猫条.png" alt="猫咪猫条" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+
+            <div class="category-section mt-16" id="cat-milk-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪奶包</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-milk" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p11-奶.png" alt="猫咪奶包" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+
+            <div class="category-section mt-16" id="cat-soup-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪汤汤</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-soup" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p12-汤1.png" alt="猫咪汤汤" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-soup" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p13-汤2.png" alt="猫咪汤汤" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-freeze-dried-main-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪主食冻干</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-main" data-aos="fade-up" data-aos-delay="100">
+                        <img src="P14-.png" alt="猫咪主食冻干" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-main" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p15-主食冻干2.png" alt="猫咪主食冻干" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-main" data-aos="fade-up" data-aos-delay="300">
+                        <img src="p16-主食冻干3.png" alt="猫咪主食冻干" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-freeze-dried-snack-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪零食冻干</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-snack" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p17-零食冻干1.png" alt="猫咪零食冻干" class="natural-image">
+                        <div class="p-4"></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-snack" data-aos="fade-up" data-aos-delay="200">
+                        <img src="p18-零食冻干2.png" alt="猫咪零食冻干" class="natural-image">
+                        <div class="p-4"></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-snack" data-aos="fade-up" data-aos-delay="300">
+                        <img src="p19-零食冻干3.png" alt="猫咪零食冻干" class="natural-image">
+                        <div class="p-4"></div>
+                    </div>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-freeze-dried-snack" data-aos="fade-up" data-aos-delay="400">
+                        <img src="P20-零食冻干4.png" alt="猫咪零食冻干" class="natural-image">
+                        <div class="p-4"></div>
+                    </div>
+                </div>
+
+            <div class="category-section mt-16" id="cat-supplement-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪保健品</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-supplement" data-aos="fade-up" data-aos-delay="100">
+                        <img src="p21-保健品.png" alt="猫咪保健品" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-supplies-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪用品</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-supplies" data-aos="fade-up" data-aos-delay="100">
+                        <img src="P22-宠物用品.png" alt="猫咪用品" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+            
+            <div class="category-section mt-16" id="cat-toy-section">
+                <h2 class="text-3xl font-light mb-8" data-aos="fade-up">猫咪玩具</h2>
+                    <div class="product-card group relative overflow-hidden rounded-lg shadow-md hover-scale" data-category="cat-toy" data-aos="fade-up" data-aos-delay="100">
+                        <img src="P23-玩具.png" alt="猫咪用品玩具" class="natural-image">
+                        <div class="p-4"><h3 class="text-xl font-light"></h3></div>
+                    </div>
+                </div>
+    </section>
+
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <i class="fa fa-paw text-primary text-2xl mr-2"></i>
+                    <span class="text-xl font-light">PetFoodMenu</span>
+                </div>
+                <div class="font-light text-sm">
+                    &copy; 2025 Chewchew O'clock. 保留所有权利。
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 初始化 AOS 动画库 (确保滑动效果)
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init();
+            
+            // 移动端菜单切换
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // 分类导航切换逻辑
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const categorySections = document.querySelectorAll('.category-section');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // 更新按钮样式
+                    categoryButtons.forEach(btn => {
+                        btn.classList.remove('category-active');
+                        btn.classList.add('border-transparent');
+                    });
+                    this.classList.add('category-active');
+                    this.classList.remove('border-transparent');
+                    
+                    // 显示对应分类
+                    if (category === 'all') {
+                        categorySections.forEach(section => {
+                            section.classList.remove('hidden');
+                        });
+                    } else {
+                        categorySections.forEach(section => {
+                            section.classList.add('hidden');
+                        });
+                        // 确保元素存在后再操作
+                        const targetSection = document.getElementById(`${category}-section`);
+                        if(targetSection) {
+                            targetSection.classList.remove('hidden');
+                        }
+                    }
+                    
+                    // 切换分类后重新刷新 AOS 动画，保持丝滑感
+                    setTimeout(() => {
+                        AOS.refresh();
+                    }, 100);
+                });
+            });
+
+            // 【核心修复】: 页面加载完成后，自动触发一次“全部”按钮点击
+            // 确保“近日新品”和其他内容在打开页面时立刻可见
+            if(document.querySelector('.category-active')) {
+                document.querySelector('.category-active').click();
+            }
+        });
+    </script>
+</body>
+</html>

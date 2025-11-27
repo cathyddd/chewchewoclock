@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chewchew O'clock - 宠物食品菜单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF8A65', // 珊瑚橙
+                        primaryLight: '#FFCCBC', 
+                        secondary: '#4FC3F7', // 天空蓝
+                        neutral: '#F9FAFB',
+                        dark: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        serif: ['Georgia', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            }
+            .glass-nav {
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(12px);
+                -webkit-backdrop-filter: blur(12px);
+            }
+            .hover-zoom-img {
+                transition: transform 0.7s ease;
+            }
+            .group:hover .hover-zoom-img {
+                transform: scale(1.1);
+            }
+        }
+    </style>
+</head>
+<body class="bg-white font-sans text-dark antialiased">
+
+    <nav class="fixed top-0 left-0 w-full glass-nav shadow-sm z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center group cursor-pointer">
+                <i class="fa fa-paw text-primary text-3xl mr-2 transform group-hover:rotate-12 transition-transform duration-300"></i>
+                <span class="text-2xl font-bold tracking-tight text-gray-800">Chewchew <span class="text-primary font-light">O'clock</span></span>
+            </div>
+            <div class="hidden md:flex space-x-10">
+                <a href="#" class="font-medium text-gray-600 hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full">首页</a>
+                <a href="cat-menu.html" class="font-medium text-gray-600 hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full">猫咪菜单</a>
+                <a href="dog-menu.html" class="font-medium text-gray-600 hover:text-primary transition-colors duration-300 relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full">狗狗菜单</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-dark focus:outline-none p-2 rounded-md hover:bg-gray-100">
+                    <i class="fa fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white w-full border-t absolute top-full left-0 shadow-lg">
+            <div class="container mx-auto px-4 py-4 space-y-2">
+                <a href="#" class="block py-3 px-4 rounded-lg bg-orange-50 text-primary font-medium">首页</a>
+                <a href="cat-menu.html" class="block py-3 px-4 rounded-lg hover:bg-gray-50 text-gray-600">猫咪菜单</a>
+                <a href="dog-menu.html" class="block py-3 px-4 rounded-lg hover:bg-gray-50 text-gray-600">狗狗菜单</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="relative min-h-screen flex items-center justify-center pt-16 px-4 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" 
+                 alt="Happy Pets" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-white"></div>
+        </div>
+
+        <div class="container mx-auto text-center relative z-10" data-aos="fade-up" data-aos-duration="1000">
+            <span class="inline-block py-1 px-3 rounded-full bg-primary/20 backdrop-blur-sm border border-white/30 text-white text-sm font-medium mb-6 tracking-wide">
+                嚼嚼食刻 · 给您一站式购物体验~
+            </span>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white text-shadow font-serif">
+                给毛孩子<br class="md:hidden">最好的美味
+            </h1>
+            <p class="text-lg md:text-2xl font-light mb-10 max-w-2xl mx-auto text-white/90 text-shadow">
+                试吃、尝鲜、囤货？这里支持任意搭配，每天都有新口味。
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="open-qr-modal-btn" class="bg-primary hover:bg-orange-600 text-white px-8 py-4 rounded-full text-lg font-medium transition-all shadow-lg hover:shadow-orange-500/30 transform hover:-translate-y-1 flex items-center justify-center cursor-pointer">
+                    <i class="fa fa-qrcode mr-2"></i> 小程序购入
+                </button>
+                
+                <a href="#menu-select" class="bg-white/20 backdrop-blur-md border border-white/50 hover:bg-white text-white hover:text-dark px-8 py-4 rounded-full text-lg font-medium transition-all flex items-center justify-center">
+                    查看菜单
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce text-white/80">
+            <i class="fa fa-angle-down text-3xl"></i>
+        </div>
+    </section>
+
+    <section id="menu-select" class="py-20 bg-white relative -mt-20 z-20 rounded-t-[3rem]">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">选择您的爱宠</h2>
+                <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <a href="cat-menu.html" class="group relative h-96 rounded-2xl overflow-hidden shadow-xl cursor-pointer" data-aos="fade-right">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="猫咪菜单" 
+                         class="w-full h-full object-cover hover-zoom-img">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                        <div class="transform transition-transform duration-300 group-hover:-translate-y-2">
+                            <span class="text-primaryLight font-medium tracking-wider text-sm uppercase mb-2 block">Meow Menu</span>
+                            <h2 class="text-4xl font-bold text-white mb-2">猫咪专区</h2>
+                            <p class="text-gray-300 font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                                罐头、冻干、猫条... 应有尽有
+                            </p>
+                            <span class="inline-flex items-center text-white font-medium group-hover:text-primary transition-colors">
+                                立即查看 <i class="fa fa-long-arrow-right ml-2"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+                
+                <a href="dog-menu.html" class="group relative h-96 rounded-2xl overflow-hidden shadow-xl cursor-pointer" data-aos="fade-left">
+                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                         alt="狗狗菜单" 
+                         class="w-full h-full object-cover hover-zoom-img">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
+                        <div class="transform transition-transform duration-300 group-hover:-translate-y-2">
+                            <span class="text-secondary font-medium tracking-wider text-sm uppercase mb-2 block">Woof Menu</span>
+                            <h2 class="text-4xl font-bold text-white mb-2">狗狗专区</h2>
+                            <p class="text-gray-300 font-light mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                                磨牙骨、主粮、零食... 健康美味
+                            </p>
+                            <span class="inline-flex items-center text-white font-medium group-hover:text-secondary transition-colors">
+                                立即查看 <i class="fa fa-long-arrow-right ml-2"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about-us" class="py-20 bg-orange-50/50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto" data-aos="fade-up">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold mb-4 text-gray-800">为什么选择 Chewchew?</h2>
+                    <p class="text-gray-500 max-w-2xl mx-auto">我们不仅仅是一家宠物超市，更是您爱宠健康成长的伙伴。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-primary text-2xl">
+                            <i class="fa fa-heart"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">严选品质</h3>
+                        <p class="text-gray-500 font-light text-sm">所有产品经过严格筛选，确保每一口都安全放心。</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-secondary/10 rounded-full flex items-center justify-center mx-auto mb-6 text-secondary text-2xl">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">极速送达</h3>
+                        <p class="text-gray-500 font-light text-sm">专业的物流配送，让爱宠不再等待美味。</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-xl shadow-sm text-center hover:shadow-md transition-shadow">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6 text-green-500 text-2xl">
+                            <i class="fa fa-smile-o"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800">贴心服务</h3>
+                        <p class="text-gray-500 font-light text-sm">加入粉丝群，获取专业喂养建议和独家优惠。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="bg-dark rounded-3xl p-8 md:p-16 text-center text-white relative overflow-hidden" data-aos="zoom-in">
+                <div class="absolute top-0 left-0 w-64 h-64 bg-primary opacity-10 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+                <div class="absolute bottom-0 right-0 w-96 h-96 bg-secondary opacity-10 rounded-full translate-x-1/2 translate-y-1/2"></div>
+
+                <div class="relative z-10 max-w-2xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">加入嚼嚼食刻大家庭</h2>
+                    <p class="text-gray-300 mb-10 text-lg font-light">
+                        获取最新的产品信息、独家折扣以及与其他铲屎官交流心得。
+                    </p>
+                    <div class="flex justify-center gap-6">
+                        <a href="#" class="w-12 h-12 rounded-full bg-white/10 hover:bg-primary flex items-center justify-center transition-all duration-300 group">
+                            <i class="fa fa-weixin text-xl group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" class="w-12 h-12 rounded-full bg-white/10 hover:bg-red-500 flex items-center justify-center transition-all duration-300 group">
+                            <i class="fa fa-weibo text-xl group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+                
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="flex items-center mb-2">
+                        <i class="fa fa-paw text-primary text-2xl mr-3"></i>
+                        <span class="text-lg font-bold text-white tracking-wide">Chewchew O'clock</span>
+                    </div>
+                    <p class="text-xs mt-1">用心挑选每一份宠爱。</p>
+                </div>
+                
+                <div class="flex justify-center space-x-8 text-sm">
+                    <a href="#" class="hover:text-white transition-colors">关于我们</a>
+                    <a href="cat-menu.html" class="hover:text-white transition-colors">猫咪菜单</a>
+                    <a href="dog-menu.html" class="hover:text-white transition-colors">狗狗菜单</a>
+                </div>
+
+                <div class="flex flex-col items-center md:items-end">
+                    <p class="text-xs mb-2 text-gray-500">扫码进入小程序</p>
+                    <div class="bg-white p-1 rounded-lg w-24 h-24 overflow-hidden">
+                        <img src="qr-code.png" alt="小程序二维码" class="w-full h-full object-contain">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-10 pt-8 text-center text-xs">
+                &copy; 2025 Chewchew O'clock. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div id="qr-modal" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white p-6 rounded-2xl shadow-2xl max-w-sm w-11/12 transform scale-95 transition-transform duration-300" id="qr-modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-dark">扫码购入</h3>
+                <button id="close-qr-modal" class="text-gray-400 hover:text-dark transition-colors">
+                    <i class="fa fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="bg-gray-50 p-4 rounded-xl border border-gray-100 mb-4 flex justify-center">
+                <img src="qr-code.png" alt="小程序二维码" class="w-48 h-48 object-contain rounded-lg">
+            </div>
+            <p class="text-center text-sm text-gray-500">
+                打开微信扫一扫，立即选购心仪商品
+            </p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({ once: true, offset: 100 });
+            
+            // 移动端菜单切换
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const nav = document.querySelector('nav');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+                const icon = this.querySelector('i');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                } else {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                }
+            });
+            
+            // 导航栏滚动效果
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-md');
+                } else {
+                    nav.classList.remove('shadow-md');
+                }
+            });
+
+            // 二维码弹窗逻辑
+            const qrBtn = document.getElementById('open-qr-modal-btn');
+            const qrModal = document.getElementById('qr-modal');
+            const closeQrBtn = document.getElementById('close-qr-modal');
+            const qrContent = document.getElementById('qr-modal-content');
+
+            function openModal() {
+                qrModal.classList.remove('hidden');
+                // 强制重绘以触发动画
+                setTimeout(() => {
+                    qrModal.classList.remove('opacity-0');
+                    qrContent.classList.remove('scale-95');
+                    qrContent.classList.add('scale-100');
+                }, 10);
+            }
+
+            function closeModal() {
+                qrModal.classList.add('opacity-0');
+                qrContent.classList.remove('scale-100');
+                qrContent.classList.add('scale-95');
+                setTimeout(() => {
+                    qrModal.classList.add('hidden');
+                }, 300); // 等待动画结束
+            }
+
+            if (qrBtn) {
+                qrBtn.addEventListener('click', (e) => {
+                    e.preventDefault(); // 防止跳转
+                    openModal();
+                });
+            }
+
+            if (closeQrBtn) {
+                closeQrBtn.addEventListener('click', closeModal);
+            }
+
+            // 点击背景关闭弹窗
+            if (qrModal) {
+                qrModal.addEventListener('click', (e) => {
+                    if (e.target === qrModal) {
+                        closeModal();
+                    }
+                });
+            }
+
+            // 平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#' || !targetId) return;
+                    
+                    // 如果是锚点链接，阻止默认行为并滚动
+                    if (targetId.startsWith('#')) {
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            e.preventDefault();
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                            // 移动端点击后关闭菜单
+                            if (!mobileMenu.classList.contains('hidden')) {
+                                mobileMenu.classList.add('hidden');
+                                mobileMenuButton.querySelector('i').classList.remove('fa-times');
+                                mobileMenuButton.querySelector('i').classList.add('fa-bars');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
